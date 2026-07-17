@@ -1,0 +1,25 @@
+node_modules/
+dist/
+dist-ssr/
+.env
+.env.local
+.env.*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+Thumbs.db
+
+# IDE Files
+.gemini/
+.vscode/
+.idea/
+
+# Build Scripts
+update-html.js
+update-css.js
+optimize-new-images.js
+optimize-images.js
+
+# Raw Images
+images/*.png
