@@ -1992,6 +1992,158 @@
       gap: 18px;
     }
 
+    .contact-section .form-status {
+      display: none;
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 0.9rem;
+      line-height: 1.45;
+      font-weight: 700;
+    }
+
+    .contact-section .form-status:not(:empty) {
+      display: block;
+    }
+
+    .contact-section .form-status--error {
+      background: #fff1f2;
+      color: #b91c1c;
+      border: 1px solid #fecdd3;
+    }
+
+    .contact-section .form-status--loading {
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+    }
+
+    .contact-section .form-label,
+    .contact-section .enquiry-fieldset legend,
+    .contact-section .form-fieldset > legend,
+    .contact-section .choice-fieldset legend {
+      color: #172239;
+      font-size: 0.9rem;
+      font-weight: 800;
+      line-height: 1.35;
+    }
+
+    .contact-section .form-label {
+      margin-bottom: 7px;
+    }
+
+    .contact-section .form-panel {
+      display: none;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .contact-section .form-panel.is-active {
+      display: flex;
+      animation: contactPanelReveal 180ms ease both;
+    }
+
+    .contact-section .form-panel-title {
+      color: #0f172a;
+      font-size: 1rem;
+      font-weight: 800;
+      margin: 2px 0 0;
+    }
+
+    .contact-section .form-grid-two,
+    .contact-section .form-grid-three {
+      display: grid;
+      gap: 14px;
+    }
+
+    .contact-section .form-grid-two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .contact-section .form-grid-three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .contact-section .form-fieldset,
+    .contact-section .enquiry-fieldset,
+    .contact-section .choice-fieldset {
+      border: 0;
+      min-width: 0;
+    }
+
+    .contact-section .form-fieldset {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding-top: 16px;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .contact-section .form-fieldset > legend {
+      padding-right: 12px;
+      color: #0f172a;
+      font-size: 1rem;
+    }
+
+    .contact-section .radio-options {
+      display: grid;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .contact-section .radio-card,
+    .contact-section .choice-fieldset label,
+    .contact-section .consent-checkbox {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: #334155;
+      font-size: 0.92rem;
+      line-height: 1.4;
+      cursor: pointer;
+    }
+
+    .contact-section .radio-card {
+      min-height: 48px;
+      padding: 12px 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      background: #ffffff;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .contact-section .radio-card:has(input:checked) {
+      border-color: #2563eb;
+      background: #f4f8ff;
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
+    }
+
+    .contact-section .radio-card input,
+    .contact-section .choice-fieldset input,
+    .contact-section .consent-checkbox input {
+      flex: 0 0 auto;
+      width: 18px;
+      height: 18px;
+      margin-top: 1px;
+      accent-color: #1d6bf3;
+    }
+
+    .contact-section .choice-fieldset {
+      display: grid;
+      gap: 10px;
+    }
+
+    .contact-section .choice-fieldset legend {
+      margin-bottom: 8px;
+    }
+
+    .contact-section .honeypot-field {
+      position: absolute;
+      left: -10000px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+
     .contact-section .input-group {
       position: relative;
       display: flex;
@@ -2043,6 +2195,17 @@
       background-size: 14px;
     }
 
+    .contact-section .form-input--plain {
+      padding-left: 16px;
+    }
+
+    .contact-section .field-help {
+      color: #64748b;
+      font-size: 0.8rem;
+      line-height: 1.4;
+      margin-top: 4px;
+    }
+
     /* Interactive Field Focus and validation styling blocks */
     .contact-section .form-input:focus,
     .contact-section .form-select:focus,
@@ -2067,12 +2230,18 @@
 
     /* Class hook to toggle runtime client validation anomalies */
     .contact-section .input-group.has-error .form-input,
-    .contact-section .input-group.has-error .form-select {
+    .contact-section .input-group.has-error .form-select,
+    .contact-section .input-group.has-error .form-textarea,
+    .contact-section .checkbox-group.has-error .choice-fieldset,
+    .contact-section .checkbox-group.has-error .consent-checkbox,
+    .contact-section .enquiry-type-group.has-error .radio-card {
       border-color: #ef4444;
       background-color: #fffafb;
     }
     
-    .contact-section .input-group.has-error .error-message {
+    .contact-section .input-group.has-error .error-message,
+    .contact-section .checkbox-group.has-error .error-message,
+    .contact-section .enquiry-type-group.has-error .error-message {
       display:block;
     }
 
@@ -2111,6 +2280,12 @@
     .contact-section .submit-btn:active {
       transform: translateY(-1px);
       box-shadow: 0 4px 12px rgba(29, 107, 243, 0.2);
+    }
+
+    .contact-section .submit-btn:disabled {
+      cursor: progress;
+      opacity: 0.82;
+      transform: none;
     }
 
     .contact-section .form-separator {
@@ -2246,6 +2421,17 @@
       }
     }
 
+    @keyframes contactPanelReveal {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     /* --- Viewports Optimization Framework Media Queries --- */
     @media (max-width: 1024px) {
       .contact-section .container {
@@ -2254,6 +2440,13 @@
       }
       .contact-section .adaptive-image-container {
         height: 320px; /* Tablet device structural portrait expansion adjustments */
+      }
+    }
+
+    @media (max-width: 760px) {
+      .contact-section .form-grid-two,
+      .contact-section .form-grid-three {
+        grid-template-columns: 1fr;
       }
     }
 

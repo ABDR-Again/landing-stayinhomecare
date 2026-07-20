@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function () {
+      try {
+        if (sessionStorage.getItem('validCareSubmission') !== 'true') {
+          window.location.replace('../');
+        }
+      } catch (error) {
+        window.location.replace('../');
+      }
+    })();
+  </script>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-NSK38PM9');</script>
+  <!-- End Google Tag Manager -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Care Request Has Been Submitted | Stay In Home Care</title>
+  <link rel="stylesheet" href="../critical.css">
+  <style>
+    body {
+      min-height: 100vh;
+      margin: 0;
+      padding: 24px;
+      box-sizing: border-box;
+      display: grid;
+      place-items: center;
+      font-family: 'DM Sans', sans-serif;
+      color: #0f172a;
+      background: radial-gradient(circle at 50% 50%, #f4f8ff 0%, #ffffff 100%);
+    }
+
+    .thank-you-card {
+      width: min(100%, 520px);
+      padding: 48px 32px;
+      box-sizing: border-box;
+      text-align: center;
+      background: #ffffff;
+      border: 1px solid #f1f5f9;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.05);
+    }
+
+    .checkmark {
+      width: 82px;
+      height: 82px;
+      margin: 0 auto 24px;
+      display: block;
+      color: #1a56db;
+    }
+
+    .checkmark circle,
+    .checkmark path {
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .checkmark circle {
+      stroke-dasharray: 166;
+      stroke-dashoffset: 166;
+      animation: draw 0.6s ease forwards;
+    }
+
+    .checkmark path {
+      stroke-dasharray: 48;
+      stroke-dashoffset: 48;
+      animation: draw 0.35s ease 0.45s forwards;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      color: #0f172a;
+      font-size: clamp(1.85rem, 5vw, 2.45rem);
+      line-height: 1.15;
+    }
+
+    p {
+      margin: 0 0 18px;
+      color: #475569;
+      font-size: 1.05rem;
+      line-height: 1.6;
+    }
+
+    .phone {
+      display: inline-flex;
+      margin-bottom: 28px;
+      color: #1a56db;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .btn-home {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 0 28px;
+      border-radius: 999px;
+      background: #1a56db;
+      color: #ffffff;
+      font-weight: 800;
+      text-decoration: none;
+      box-shadow: 0 8px 20px rgba(26, 86, 219, 0.15);
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .btn-home:hover {
+      background: #1e40af;
+      transform: translateY(-2px);
+    }
+
+    @keyframes draw {
+      to { stroke-dashoffset: 0; }
+    }
+
+    @media (max-width: 480px) {
+      .thank-you-card {
+        padding: 36px 20px;
+      }
+
+      .btn-home {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NSK38PM9"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <main class="thank-you-card" aria-labelledby="careThanksTitle">
+    <svg class="checkmark" viewBox="0 0 52 52" aria-hidden="true">
+      <circle cx="26" cy="26" r="24"></circle>
+      <path d="M14.1 27.2l7.1 7.2 16.7-16.8"></path>
+    </svg>
+
+    <h1 id="careThanksTitle">Your Care Request Has Been Submitted</h1>
+    <p>Thank you. Your home-care request has been received successfully. A member of our care coordination team will contact you shortly.</p>
+    <a class="phone" href="tel:+12146126686">1 214-612-6686</a>
+    <br>
+    <a class="btn-home" href="../">Return to homepage</a>
+  </main>
+
+  <script>
+    (function () {
+      const validSubmission = sessionStorage.getItem('validCareSubmission') === 'true';
+      if (!validSubmission) {
+        window.location.replace('../');
+        return;
+      }
+
+      const submissionId = sessionStorage.getItem('careSubmissionId') || 'care-submission';
+      const careType = sessionStorage.getItem('careSubmissionType') || 'home_care';
+      const firedId = sessionStorage.getItem('careConversionFiredId');
+
+      if (firedId !== submissionId) {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: 'qualified_home_care_form_submit',
+          submission_id: submissionId,
+          enquiry_type: careType
+        });
+
+        if (careType === 'professional_referral') {
+          window.dataLayer.push({
+            event: 'professional_referral_submit',
+            submission_id: submissionId,
+            enquiry_type: careType
+          });
+        }
+
+        sessionStorage.setItem('careConversionFiredId', submissionId);
+      }
+
+      sessionStorage.removeItem('validCareSubmission');
+      sessionStorage.removeItem('careSubmissionId');
+      sessionStorage.removeItem('careSubmissionType');
+    })();
+  </script>
+</body>
+</html>

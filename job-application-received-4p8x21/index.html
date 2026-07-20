@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-NSK38PM9');</script>
+  <!-- End Google Tag Manager -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Job Application Has Been Received | Stay In Home Care</title>
+  <link rel="stylesheet" href="../critical.css">
+  <style>
+    body {
+      min-height: 100vh;
+      margin: 0;
+      padding: 24px;
+      box-sizing: border-box;
+      display: grid;
+      place-items: center;
+      font-family: 'DM Sans', sans-serif;
+      color: #0f172a;
+      background: radial-gradient(circle at 50% 50%, #f4f8ff 0%, #ffffff 100%);
+    }
+
+    .thank-you-card {
+      width: min(100%, 540px);
+      padding: 48px 32px;
+      box-sizing: border-box;
+      text-align: center;
+      background: #ffffff;
+      border: 1px solid #f1f5f9;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.05);
+    }
+
+    .success-animation {
+      width: 112px;
+      height: 112px;
+      display: block;
+      margin: 0 auto 22px;
+    }
+
+    .success-ring {
+      fill: #eff6ff;
+      stroke: #bfdbfe;
+      stroke-width: 2;
+      transform-origin: center;
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+
+    .success-circle {
+      fill: #1a56db;
+      transform-origin: center;
+      animation: scaleIn 0.45s ease both;
+    }
+
+    .success-check {
+      fill: none;
+      stroke: #ffffff;
+      stroke-width: 7;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 58;
+      stroke-dashoffset: 58;
+      animation: draw 0.45s ease 0.35s forwards;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      color: #0f172a;
+      font-size: clamp(1.85rem, 5vw, 2.4rem);
+      line-height: 1.15;
+    }
+
+    p {
+      margin: 0 0 18px;
+      color: #475569;
+      font-size: 1.05rem;
+      line-height: 1.6;
+    }
+
+    .redirect-message {
+      margin-top: 4px;
+      color: #64748b;
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .btn-continue {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      margin-top: 10px;
+      padding: 0 30px;
+      border-radius: 999px;
+      background: #1a56db;
+      color: #ffffff;
+      font-weight: 800;
+      text-decoration: none;
+      box-shadow: 0 8px 20px rgba(26, 86, 219, 0.15);
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .btn-continue:hover {
+      background: #1e40af;
+      transform: translateY(-2px);
+    }
+
+    @keyframes draw {
+      to { stroke-dashoffset: 0; }
+    }
+
+    @keyframes scaleIn {
+      from { transform: scale(0.82); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.72; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .success-ring,
+      .success-circle,
+      .success-check {
+        animation: none;
+        stroke-dashoffset: 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .thank-you-card {
+        padding: 36px 20px;
+      }
+
+      .btn-continue {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NSK38PM9"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <main class="thank-you-card" aria-labelledby="jobThanksTitle">
+    <svg class="success-animation" width="112" height="112" viewBox="0 0 112 112" role="img" aria-label="Successful application submission animation">
+      <circle class="success-ring" cx="56" cy="56" r="52"></circle>
+      <circle class="success-circle" cx="56" cy="56" r="36"></circle>
+      <path class="success-check" d="M39 57.5 50.5 69 75 44"></path>
+    </svg>
+
+    <h1 id="jobThanksTitle">Your Job Application Has Been Received</h1>
+    <p>Thank you for submitting your job application. Your information has been received and will be reviewed by the recruitment team.</p>
+    <p class="redirect-message">You will be redirected shortly.</p>
+    <a id="jobRedirectLink" class="btn-continue" href="[JOB-APPLICANT-REDIRECT-URL]">Continue</a>
+  </main>
+
+  <script>
+    (function () {
+      const JOB_APPLICANT_REDIRECT_URL = '[JOB-APPLICANT-REDIRECT-URL]';
+      const validSubmission = sessionStorage.getItem('validJobSubmission') === 'true';
+      const submissionId = sessionStorage.getItem('jobSubmissionId') || 'job-submission';
+      const firedId = sessionStorage.getItem('jobEventFiredId');
+      const redirectLink = document.getElementById('jobRedirectLink');
+
+      if (redirectLink) redirectLink.href = JOB_APPLICANT_REDIRECT_URL;
+
+      if (validSubmission && firedId !== submissionId) {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: 'job_application_submit',
+          submission_id: submissionId,
+          enquiry_type: 'job_application'
+        });
+        sessionStorage.setItem('jobEventFiredId', submissionId);
+      }
+
+      sessionStorage.removeItem('validJobSubmission');
+      sessionStorage.removeItem('jobSubmissionId');
+
+      setTimeout(() => {
+        window.location.replace(JOB_APPLICANT_REDIRECT_URL);
+      }, 6000);
+    })();
+  </script>
+</body>
+</html>

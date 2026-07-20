@@ -32,7 +32,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <link rel="canonical" href="https://stayinhomecare.com/">
     
     <!-- Preload / Prefetch Optimizations -->
-    <link rel="prefetch" href="./thank-you.html">
+    <link rel="prefetch" href="./thank-you-care-request-7k3m92/index.html">
+    <link rel="prefetch" href="./job-application-received-4p8x21/index.html">
     
     <meta name="theme-color" content="#1a56db">
     <link rel="icon" href="./images/optimized/stay-in-home-care-logo-transparent.webp" type="image/webp">
@@ -75,7 +76,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </a>
       <a href="#about">About Us</a>
       <a href="#families">For Families</a>
-      <a href="#jobApplicationModal" data-open-job-form>For Caregivers</a>
+      <a href="#contactFormCard" data-select-enquiry="job_application">For Caregivers</a>
       <a href="#faq">FAQ</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -97,7 +98,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <a href="#services">Services</a>
         <a href="#about">About Us</a>
         <a href="#families">For Families</a>
-        <a href="#jobApplicationModal" data-open-job-form>For Caregivers</a>
+        <a href="#contactFormCard" data-select-enquiry="job_application">For Caregivers</a>
         <a href="#faq">FAQ</a>
         <a href="#contact">Contact</a>
         <a href="tel:+12146126686">Call +1 (214) 612-6686</a>
@@ -145,7 +146,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </span>
         </a>
 
-        <button class="audience-card audience-card--job" type="button" data-open-job-form aria-label="Apply for a caregiver job. Open the caregiver application form.">
+        <button class="audience-card audience-card--job" type="button" data-select-enquiry="job_application" data-scroll-target="#contactFormCard" aria-label="Apply for a caregiver job. Go to the caregiver application form.">
           <span class="audience-icon" aria-hidden="true">
             <svg viewBox="0 0 48 48" fill="none">
               <circle cx="19" cy="17" r="6" stroke="currentColor" stroke-width="2.6"/>
@@ -1837,47 +1838,133 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <p>Share your care needs and our Dallas care team will contact you to discuss the best support for your family.</p>
         </div>
 
-        <form id="careRequestForm" class="main-care-form" novalidate>
+        <form id="careRequestForm" class="main-care-form" enctype="multipart/form-data" novalidate>
           
-          <!-- Hidden field to pass multiple email addresses to EmailJS -->
-          <input type="hidden" name="to_emails" value="Thea@sihcdfw.com,Stayinhome@sihcdfw.com,leads@sihcdfw.com,ru208208@gmail.com">
+          <input type="hidden" id="recipientEmails" name="to_emails" value="Thea@sihcdfw.com,Stayinhome@sihcdfw.com,leads@sihcdfw.com,ru208208@gmail.com">
+          <input type="hidden" id="submissionLabel" name="submission_label" value="">
+          <input type="hidden" id="submissionType" name="submission_type" value="">
+          <input type="hidden" id="submissionSource" name="submission_source" value="landing_page_final_form">
+          <input type="hidden" id="trackingGclid" name="gclid" value="">
+          <input type="hidden" id="trackingGbraid" name="gbraid" value="">
+          <input type="hidden" id="trackingWbraid" name="wbraid" value="">
+          <input type="hidden" id="trackingUtmSource" name="utm_source" value="">
+          <input type="hidden" id="trackingUtmMedium" name="utm_medium" value="">
+          <input type="hidden" id="trackingUtmCampaign" name="utm_campaign" value="">
+          <input type="hidden" id="trackingUtmContent" name="utm_content" value="">
+          <input type="hidden" id="trackingUtmTerm" name="utm_term" value="">
+
+          <div class="form-status" id="formStatus" role="status" aria-live="polite"></div>
+
+          <div class="input-group enquiry-type-group" id="enquiryTypeGroup">
+            <fieldset class="enquiry-fieldset" aria-describedby="enquiryTypeError">
+              <legend>What are you contacting us about? <span aria-hidden="true">*</span></legend>
+              <div class="radio-options">
+                <label class="radio-card">
+                  <input type="radio" name="enquiry_type" value="self_care" required>
+                  <span>I need home-care services for myself</span>
+                </label>
+                <label class="radio-card">
+                  <input type="radio" name="enquiry_type" value="family_care" required>
+                  <span>I need home-care services for a parent or loved one</span>
+                </label>
+                <label class="radio-card">
+                  <input type="radio" name="enquiry_type" value="professional_referral" required>
+                  <span>I am a healthcare professional making a referral</span>
+                </label>
+                <label class="radio-card">
+                  <input type="radio" name="enquiry_type" value="job_application" required>
+                  <span>I am applying for a job</span>
+                </label>
+              </div>
+            </fieldset>
+            <span class="error-message" id="enquiryTypeError">Please select why you are contacting us.</span>
+          </div>
+
+          <div class="input-group honeypot-field" aria-hidden="true">
+            <label for="companyWebsite">Company website</label>
+            <input type="text" id="companyWebsite" name="company_website" tabindex="-1" autocomplete="off">
+          </div>
+
+          <div id="careFields" class="form-panel" data-panel="care" aria-hidden="true" hidden>
+            <h4 class="form-panel-title">Home-care enquiry</h4>
 
           <div class="input-group" id="nameGroup">
+            <label class="form-label" for="fullName">Full name <span aria-hidden="true">*</span></label>
             <div class="input-icon-wrapper">
-              <input type="text" id="fullName" name="name" class="form-input" placeholder="Full Name" required />
+              <input type="text" id="fullName" name="name" class="form-input" placeholder="Full Name" autocomplete="name" required aria-describedby="nameError" />
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
                 <circle cx="12" cy="7" r="4"/>
               </svg>
             </div>
-            <span class="error-message">Please enter your full name.</span>
+            <span class="error-message" id="nameError">Please enter your full name.</span>
           </div>
 
           <div class="input-group" id="phoneGroup">
+            <label class="form-label" for="phoneNumber">Phone number <span aria-hidden="true">*</span></label>
             <div class="input-icon-wrapper">
               <span style="position: absolute; left: 44px; color: #0f172a; font-weight: 500; font-size: 0.95rem; pointer-events: none;">+1</span>
-              <input type="tel" id="phoneNumber" name="phone" class="form-input" style="padding-left: 70px;" placeholder="(555) 555-5555" pattern="^\(\d{3}\) \d{3}-\d{4}$" required />
+              <input type="tel" id="phoneNumber" name="phone" class="form-input" style="padding-left: 70px;" placeholder="(555) 555-5555" pattern="^\(\d{3}\) \d{3}-\d{4}$" autocomplete="tel" inputmode="tel" required aria-describedby="phoneError" />
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
               </svg>
             </div>
-            <span class="error-message">Please enter a valid 10-digit US phone number.</span>
+            <span class="error-message" id="phoneError">Please enter a valid 10-digit US phone number.</span>
           </div>
 
           <div class="input-group" id="emailGroup">
+            <label class="form-label" for="emailAddress">Email address <span aria-hidden="true">*</span></label>
             <div class="input-icon-wrapper">
-              <input type="email" id="emailAddress" name="email" class="form-input" placeholder="Email Address" required />
+              <input type="email" id="emailAddress" name="email" class="form-input" placeholder="Email Address" autocomplete="email" required aria-describedby="emailError" />
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
                 <polyline points="22,6 12,13 2,6"/>
               </svg>
             </div>
-            <span class="error-message">Please enter a valid email address.</span>
+            <span class="error-message" id="emailError">Please enter a valid email address.</span>
+          </div>
+
+          <div class="form-grid-two">
+            <div class="input-group" id="careZipGroup">
+              <label class="form-label" for="careZip">ZIP code <span aria-hidden="true">*</span></label>
+              <input type="text" id="careZip" name="zip_code" class="form-input form-input--plain" autocomplete="postal-code" inputmode="numeric" pattern="^\d{5}(-\d{4})?$" required aria-describedby="careZipError">
+              <span class="error-message" id="careZipError">Please enter a valid ZIP code.</span>
+            </div>
+
+            <div class="input-group" id="careRecipientGroup">
+              <label class="form-label" for="careRecipient">Who needs care? <span aria-hidden="true">*</span></label>
+              <select id="careRecipient" name="care_recipient" class="form-select form-input--plain" required aria-describedby="careRecipientError">
+                <option value="" disabled selected>Select one</option>
+                <option value="myself">Myself</option>
+                <option value="parent">Parent</option>
+                <option value="spouse_partner">Spouse or partner</option>
+                <option value="relative">Relative</option>
+                <option value="patient_or_client">Patient or client</option>
+                <option value="other">Other</option>
+              </select>
+              <span class="error-message" id="careRecipientError">Please select who needs care.</span>
+            </div>
+          </div>
+
+          <div class="input-group" id="careRelationshipGroup">
+            <label class="form-label" for="careRelationship">Relationship to the person needing care <span aria-hidden="true">*</span></label>
+            <select id="careRelationship" name="relationship_to_care_recipient" class="form-select form-input--plain" required aria-describedby="careRelationshipError">
+              <option value="" disabled selected>Select relationship</option>
+              <option value="self">Self</option>
+              <option value="adult_child">Adult child</option>
+              <option value="spouse_partner">Spouse or partner</option>
+              <option value="relative">Relative</option>
+              <option value="friend">Friend</option>
+              <option value="healthcare_professional">Healthcare professional</option>
+              <option value="other">Other</option>
+            </select>
+            <span class="error-message" id="careRelationshipError">Please select your relationship.</span>
           </div>
 
           <div class="input-group" id="careGroup">
+            <label class="form-label" for="careNeeded">Type of care required <span aria-hidden="true">*</span></label>
             <div class="input-icon-wrapper">
-              <select id="careNeeded" aria-label="Care Needed" name="care_needed" class="form-select" required>
+              <select id="careNeeded" aria-label="Care Needed" name="care_needed" class="form-select" required aria-describedby="careError">
                 <option value="" disabled selected hidden>Care Needed</option>
                 <option value="elderly">Elderly Care</option>
                 <option value="senior-home">Senior Home Care</option>
@@ -1897,17 +1984,300 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <option value="respite">Respite Care</option>
                 <option value="overnight">Overnight Senior Care</option>
                 <option value="24-hour">24 Hour Home Care</option>
+                <option value="mobility-assistance">Mobility Assistance</option>
+                <option value="other">Other</option>
               </select>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
               </svg>
             </div>
-            <span class="error-message">Please select a care capability option.</span>
+            <span class="error-message" id="careError">Please select a care type.</span>
+          </div>
+
+          <div class="form-grid-two">
+            <div class="input-group" id="careStartDateGroup">
+              <label class="form-label" for="careStartDate">Preferred care start date <span aria-hidden="true">*</span></label>
+              <input type="date" id="careStartDate" name="preferred_care_start_date" class="form-input form-input--plain" required aria-describedby="careStartDateError">
+              <span class="error-message" id="careStartDateError">Please select a preferred start date.</span>
+            </div>
+
+            <div class="input-group" id="careHoursGroup">
+              <label class="form-label" for="careHours">Approximate care hours required <span aria-hidden="true">*</span></label>
+              <select id="careHours" name="approximate_care_hours" class="form-select form-input--plain" required aria-describedby="careHoursError">
+                <option value="" disabled selected>Select hours</option>
+                <option value="under_10_weekly">Under 10 hours per week</option>
+                <option value="10_20_weekly">10-20 hours per week</option>
+                <option value="20_40_weekly">20-40 hours per week</option>
+                <option value="40_plus_weekly">40+ hours per week</option>
+                <option value="overnight">Overnight care</option>
+                <option value="24_hour">24-hour care</option>
+                <option value="not_sure">Not sure yet</option>
+              </select>
+              <span class="error-message" id="careHoursError">Please select approximate care hours.</span>
+            </div>
+          </div>
+
+          <div class="input-group" id="careContactMethodGroup">
+            <label class="form-label" for="careContactMethod">Preferred contact method <span aria-hidden="true">*</span></label>
+            <select id="careContactMethod" name="preferred_contact_method" class="form-select form-input--plain" required aria-describedby="careContactMethodError">
+              <option value="" disabled selected>Select contact method</option>
+              <option value="phone">Phone</option>
+              <option value="email">Email</option>
+              <option value="text">Text message</option>
+            </select>
+            <span class="error-message" id="careContactMethodError">Please select a preferred contact method.</span>
           </div>
 
           <div class="input-group">
-            <textarea id="optionalMessage" name="message" class="form-textarea" placeholder="Message (optional)"></textarea>
+            <label class="form-label" for="optionalMessage">Additional message</label>
+            <textarea id="optionalMessage" name="message" class="form-textarea" placeholder="Share practical care needs, timing, or questions. Please do not include unnecessary private medical details."></textarea>
           </div>
+          </div>
+          <div id="jobFields" class="form-panel" data-panel="job" aria-hidden="true" hidden>
+            <h4 class="form-panel-title">Job application</h4>
+
+            <fieldset class="form-fieldset">
+              <legend>Personal information</legend>
+              <div class="input-group" id="jobLegalNameGroup">
+                <label class="form-label" for="jobLegalName">Full legal name <span aria-hidden="true">*</span></label>
+                <input type="text" id="jobLegalName" name="job_legal_name" class="form-input form-input--plain" autocomplete="name" required aria-describedby="jobLegalNameError">
+                <span class="error-message" id="jobLegalNameError">Please enter your full legal name.</span>
+              </div>
+
+              <div class="form-grid-two">
+                <div class="input-group" id="jobEmailFinalGroup">
+                  <label class="form-label" for="jobEmailFinal">Email address <span aria-hidden="true">*</span></label>
+                  <input type="email" id="jobEmailFinal" name="job_email" class="form-input form-input--plain" autocomplete="email" required aria-describedby="jobEmailFinalError">
+                  <span class="error-message" id="jobEmailFinalError">Please enter a valid email address.</span>
+                </div>
+
+                <div class="input-group" id="jobPhoneFinalGroup">
+                  <label class="form-label" for="jobPhoneFinal">Phone number <span aria-hidden="true">*</span></label>
+                  <input type="tel" id="jobPhoneFinal" name="job_phone" class="form-input form-input--plain" autocomplete="tel" inputmode="tel" placeholder="(555) 555-5555" required aria-describedby="jobPhoneFinalError">
+                  <span class="error-message" id="jobPhoneFinalError">Please enter a valid 10-digit US phone number.</span>
+                </div>
+              </div>
+
+              <div class="form-grid-two">
+                <div class="input-group" id="jobCityGroup">
+                  <label class="form-label" for="jobCity">Current city <span aria-hidden="true">*</span></label>
+                  <input type="text" id="jobCity" name="job_current_city" class="form-input form-input--plain" autocomplete="address-level2" required aria-describedby="jobCityError">
+                  <span class="error-message" id="jobCityError">Please enter your current city.</span>
+                </div>
+
+                <div class="input-group" id="jobZipGroup">
+                  <label class="form-label" for="jobZip">Current ZIP code <span aria-hidden="true">*</span></label>
+                  <input type="text" id="jobZip" name="job_current_zip" class="form-input form-input--plain" autocomplete="postal-code" inputmode="numeric" pattern="^\d{5}(-\d{4})?$" required aria-describedby="jobZipError">
+                  <span class="error-message" id="jobZipError">Please enter a valid ZIP code.</span>
+                </div>
+              </div>
+
+              <div class="input-group">
+                <label class="form-label" for="jobAddress">Full address, if required</label>
+                <input type="text" id="jobAddress" name="job_address" class="form-input form-input--plain" autocomplete="street-address">
+              </div>
+
+              <div class="form-grid-two">
+                <div class="input-group" id="jobAuthorizedGroup">
+                  <label class="form-label" for="jobAuthorized">Legally authorized to work in the United States? <span aria-hidden="true">*</span></label>
+                  <select id="jobAuthorized" name="job_authorized_to_work" class="form-select form-input--plain" required aria-describedby="jobAuthorizedError">
+                    <option value="" disabled selected>Select one</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                  </select>
+                  <span class="error-message" id="jobAuthorizedError">Please answer this question.</span>
+                </div>
+
+                <div class="input-group" id="jobSponsorshipGroup">
+                  <label class="form-label" for="jobSponsorship">Will you require employment sponsorship? <span aria-hidden="true">*</span></label>
+                  <select id="jobSponsorship" name="job_requires_sponsorship" class="form-select form-input--plain" required aria-describedby="jobSponsorshipError">
+                    <option value="" disabled selected>Select one</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                  </select>
+                  <span class="error-message" id="jobSponsorshipError">Please answer this question.</span>
+                </div>
+              </div>
+
+              <div class="input-group" id="jobAgeGroup">
+                <label class="form-label" for="jobAge">Are you at least 18 years old? <span aria-hidden="true">*</span></label>
+                <select id="jobAge" name="job_at_least_18" class="form-select form-input--plain" required aria-describedby="jobAgeError">
+                  <option value="" disabled selected>Select one</option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
+                <span class="error-message" id="jobAgeError">Please answer this question.</span>
+              </div>
+            </fieldset>
+
+            <fieldset class="form-fieldset">
+              <legend>Position information</legend>
+              <div class="form-grid-two">
+                <div class="input-group" id="jobPositionGroup">
+                  <label class="form-label" for="jobPosition">Position being applied for <span aria-hidden="true">*</span></label>
+                  <select id="jobPosition" name="job_position" class="form-select form-input--plain" required aria-describedby="jobPositionError">
+                    <option value="" disabled selected>Select position</option>
+                    <option value="caregiver">Caregiver</option>
+                    <option value="cna">CNA</option>
+                    <option value="hha">HHA</option>
+                    <option value="live_in_caregiver">Live-in caregiver</option>
+                    <option value="other">Other</option>
+                  </select>
+                  <span class="error-message" id="jobPositionError">Please select a position.</span>
+                </div>
+
+                <div class="input-group" id="jobLocationGroup">
+                  <label class="form-label" for="jobLocation">Preferred work location <span aria-hidden="true">*</span></label>
+                  <input type="text" id="jobLocation" name="job_preferred_work_location" class="form-input form-input--plain" required aria-describedby="jobLocationError">
+                  <span class="error-message" id="jobLocationError">Please enter a preferred work location.</span>
+                </div>
+              </div>
+
+              <div class="input-group checkbox-group" id="jobEmploymentTypeGroup" data-required-checkbox-group>
+                <fieldset class="choice-fieldset" aria-describedby="jobEmploymentTypeError">
+                  <legend>Preferred employment type <span aria-hidden="true">*</span></legend>
+                  <label><input type="checkbox" name="job_employment_type" value="full_time"> Full-time</label>
+                  <label><input type="checkbox" name="job_employment_type" value="part_time"> Part-time</label>
+                  <label><input type="checkbox" name="job_employment_type" value="prn"> PRN</label>
+                  <label><input type="checkbox" name="job_employment_type" value="weekends"> Weekends</label>
+                  <label><input type="checkbox" name="job_employment_type" value="overnight"> Overnight</label>
+                  <label><input type="checkbox" name="job_employment_type" value="live_in"> Live-in</label>
+                </fieldset>
+                <span class="error-message" id="jobEmploymentTypeError">Please select at least one employment type.</span>
+              </div>
+
+              <div class="input-group checkbox-group" id="jobShiftGroup" data-required-checkbox-group>
+                <fieldset class="choice-fieldset" aria-describedby="jobShiftError">
+                  <legend>Preferred shifts <span aria-hidden="true">*</span></legend>
+                  <label><input type="checkbox" name="job_preferred_shifts" value="day"> Day</label>
+                  <label><input type="checkbox" name="job_preferred_shifts" value="evening"> Evening</label>
+                  <label><input type="checkbox" name="job_preferred_shifts" value="overnight"> Overnight</label>
+                  <label><input type="checkbox" name="job_preferred_shifts" value="weekend"> Weekend</label>
+                  <label><input type="checkbox" name="job_preferred_shifts" value="live_in"> Live-in</label>
+                </fieldset>
+                <span class="error-message" id="jobShiftError">Please select at least one preferred shift.</span>
+              </div>
+
+              <div class="form-grid-two">
+                <div class="input-group" id="jobStartDateGroup">
+                  <label class="form-label" for="jobStartDate">Earliest available start date <span aria-hidden="true">*</span></label>
+                  <input type="date" id="jobStartDate" name="job_earliest_start_date" class="form-input form-input--plain" required aria-describedby="jobStartDateError">
+                  <span class="error-message" id="jobStartDateError">Please select your earliest start date.</span>
+                </div>
+
+                <div class="input-group" id="jobAvailableHoursGroup">
+                  <label class="form-label" for="jobAvailableHours">Available hours <span aria-hidden="true">*</span></label>
+                  <input type="text" id="jobAvailableHours" name="job_available_hours" class="form-input form-input--plain" placeholder="Example: 8am-6pm, 30 hours weekly" required aria-describedby="jobAvailableHoursError">
+                  <span class="error-message" id="jobAvailableHoursError">Please enter your available hours.</span>
+                </div>
+              </div>
+
+              <div class="input-group checkbox-group" id="jobAvailableDaysGroup" data-required-checkbox-group>
+                <fieldset class="choice-fieldset" aria-describedby="jobAvailableDaysError">
+                  <legend>Available days <span aria-hidden="true">*</span></legend>
+                  <label><input type="checkbox" name="job_available_days" value="monday"> Monday</label>
+                  <label><input type="checkbox" name="job_available_days" value="tuesday"> Tuesday</label>
+                  <label><input type="checkbox" name="job_available_days" value="wednesday"> Wednesday</label>
+                  <label><input type="checkbox" name="job_available_days" value="thursday"> Thursday</label>
+                  <label><input type="checkbox" name="job_available_days" value="friday"> Friday</label>
+                  <label><input type="checkbox" name="job_available_days" value="saturday"> Saturday</label>
+                  <label><input type="checkbox" name="job_available_days" value="sunday"> Sunday</label>
+                </fieldset>
+                <span class="error-message" id="jobAvailableDaysError">Please select at least one available day.</span>
+              </div>
+
+              <div class="form-grid-three">
+                <div class="input-group" id="jobWeekendsGroup"><label class="form-label" for="jobWeekends">Willing to work weekends? <span aria-hidden="true">*</span></label><select id="jobWeekends" name="job_willing_weekends" class="form-select form-input--plain" required aria-describedby="jobWeekendsError"><option value="" disabled selected>Select one</option><option value="yes">Yes</option><option value="no">No</option></select><span class="error-message" id="jobWeekendsError">Please answer.</span></div>
+                <div class="input-group" id="jobOvernightGroup"><label class="form-label" for="jobOvernight">Willing to work overnight shifts? <span aria-hidden="true">*</span></label><select id="jobOvernight" name="job_willing_overnight" class="form-select form-input--plain" required aria-describedby="jobOvernightError"><option value="" disabled selected>Select one</option><option value="yes">Yes</option><option value="no">No</option></select><span class="error-message" id="jobOvernightError">Please answer.</span></div>
+                <div class="input-group" id="jobTravelGroup"><label class="form-label" for="jobTravel">Willing to travel to clients? <span aria-hidden="true">*</span></label><select id="jobTravel" name="job_willing_travel" class="form-select form-input--plain" required aria-describedby="jobTravelError"><option value="" disabled selected>Select one</option><option value="yes">Yes</option><option value="no">No</option></select><span class="error-message" id="jobTravelError">Please answer.</span></div>
+              </div>
+            </fieldset>
+
+            <fieldset class="form-fieldset">
+              <legend>Experience and qualifications</legend>
+              <div class="form-grid-two">
+                <div class="input-group" id="jobExperienceYearsGroup">
+                  <label class="form-label" for="jobExperienceYears">Years of caregiving experience <span aria-hidden="true">*</span></label>
+                  <select id="jobExperienceYears" name="job_years_caregiving_experience" class="form-select form-input--plain" required aria-describedby="jobExperienceYearsError">
+                    <option value="" disabled selected>Select experience</option>
+                    <option value="none">No professional experience yet</option>
+                    <option value="under_1">Under 1 year</option>
+                    <option value="1_2">1-2 years</option>
+                    <option value="3_5">3-5 years</option>
+                    <option value="5_plus">5+ years</option>
+                  </select>
+                  <span class="error-message" id="jobExperienceYearsError">Please select your experience level.</span>
+                </div>
+
+                <div class="input-group" id="jobHomeCareExperienceGroup"><label class="form-label" for="jobHomeCareExperience">Previous home-care experience? <span aria-hidden="true">*</span></label><select id="jobHomeCareExperience" name="job_previous_home_care_experience" class="form-select form-input--plain" required aria-describedby="jobHomeCareExperienceError"><option value="" disabled selected>Select one</option><option value="yes">Yes</option><option value="no">No</option></select><span class="error-message" id="jobHomeCareExperienceError">Please answer.</span></div>
+              </div>
+
+              <div class="form-grid-three">
+                <div class="input-group"><label class="form-label" for="jobDementiaExperience">Dementia or Alzheimer's-care experience</label><select id="jobDementiaExperience" name="job_dementia_experience" class="form-select form-input--plain"><option value="">Select one</option><option value="yes">Yes</option><option value="no">No</option></select></div>
+                <div class="input-group"><label class="form-label" for="jobHospiceExperience">Hospice-care experience</label><select id="jobHospiceExperience" name="job_hospice_experience" class="form-select form-input--plain"><option value="">Select one</option><option value="yes">Yes</option><option value="no">No</option></select></div>
+                <div class="input-group"><label class="form-label" for="jobMobilityExperience">Mobility-assistance experience</label><select id="jobMobilityExperience" name="job_mobility_experience" class="form-select form-input--plain"><option value="">Select one</option><option value="yes">Yes</option><option value="no">No</option></select></div>
+              </div>
+
+              <div class="form-grid-three">
+                <div class="input-group"><label class="form-label" for="jobCna">CNA certification status</label><select id="jobCna" name="job_cna_status" class="form-select form-input--plain"><option value="">Select status</option><option value="active">Active</option><option value="expired">Expired</option><option value="none">None</option></select></div>
+                <div class="input-group"><label class="form-label" for="jobHha">HHA certification status</label><select id="jobHha" name="job_hha_status" class="form-select form-input--plain"><option value="">Select status</option><option value="active">Active</option><option value="expired">Expired</option><option value="none">None</option></select></div>
+                <div class="input-group"><label class="form-label" for="jobNursingLicense">Nursing license status</label><select id="jobNursingLicense" name="job_nursing_license_status" class="form-select form-input--plain"><option value="">Select status</option><option value="active">Active</option><option value="expired">Expired</option><option value="none">None</option></select></div>
+              </div>
+
+              <div class="form-grid-three">
+                <div class="input-group"><label class="form-label" for="jobCpr">CPR certification status</label><select id="jobCpr" name="job_cpr_status" class="form-select form-input--plain"><option value="">Select status</option><option value="active">Active</option><option value="expired">Expired</option><option value="none">None</option></select></div>
+                <div class="input-group"><label class="form-label" for="jobFirstAid">First-aid certification status</label><select id="jobFirstAid" name="job_first_aid_status" class="form-select form-input--plain"><option value="">Select status</option><option value="active">Active</option><option value="expired">Expired</option><option value="none">None</option></select></div>
+                <div class="input-group" id="jobDriverLicenseGroup"><label class="form-label" for="jobDriverLicense">Driver's license status <span aria-hidden="true">*</span></label><select id="jobDriverLicense" name="job_driver_license_status" class="form-select form-input--plain" required aria-describedby="jobDriverLicenseError"><option value="" disabled selected>Select status</option><option value="valid">Valid</option><option value="expired">Expired</option><option value="none">None</option></select><span class="error-message" id="jobDriverLicenseError">Please select your driver's license status.</span></div>
+              </div>
+
+              <div class="form-grid-two">
+                <div class="input-group" id="jobReliableTransportationGroup"><label class="form-label" for="jobReliableTransportation">Access to reliable transportation <span aria-hidden="true">*</span></label><select id="jobReliableTransportation" name="job_reliable_transportation" class="form-select form-input--plain" required aria-describedby="jobReliableTransportationError"><option value="" disabled selected>Select one</option><option value="yes">Yes</option><option value="no">No</option></select><span class="error-message" id="jobReliableTransportationError">Please answer this question.</span></div>
+                <div class="input-group"><label class="form-label" for="jobLanguages">Languages spoken</label><input type="text" id="jobLanguages" name="job_languages_spoken" class="form-input form-input--plain"></div>
+              </div>
+
+              <div class="input-group" id="jobEmploymentHistoryGroup"><label class="form-label" for="jobEmploymentHistory">Employment history <span aria-hidden="true">*</span></label><textarea id="jobEmploymentHistory" name="job_employment_history" class="form-textarea" rows="4" required aria-describedby="jobEmploymentHistoryError"></textarea><span class="error-message" id="jobEmploymentHistoryError">Please summarize your employment history.</span></div>
+
+              <div class="form-grid-two">
+                <div class="input-group" id="jobRecentEmployerGroup"><label class="form-label" for="jobRecentEmployer">Most recent employer <span aria-hidden="true">*</span></label><input type="text" id="jobRecentEmployer" name="job_most_recent_employer" class="form-input form-input--plain" required aria-describedby="jobRecentEmployerError"><span class="error-message" id="jobRecentEmployerError">Please enter your most recent employer.</span></div>
+                <div class="input-group"><label class="form-label" for="jobReasonLeaving">Reason for leaving previous employment</label><input type="text" id="jobReasonLeaving" name="job_reason_for_leaving" class="form-input form-input--plain"></div>
+              </div>
+
+              <div class="input-group" id="jobReferencesGroup"><label class="form-label" for="jobReferences">Professional references <span aria-hidden="true">*</span></label><textarea id="jobReferences" name="job_professional_references" class="form-textarea" rows="3" required aria-describedby="jobReferencesError"></textarea><span class="error-message" id="jobReferencesError">Please provide professional references.</span></div>
+
+              <div class="input-group" id="jobResumeGroup">
+                <label class="form-label" for="jobResume">Resume upload</label>
+                <input type="file" id="jobResume" name="job_resume" class="form-input form-input--plain" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" aria-describedby="jobResumeHelp jobResumeError">
+                <span class="field-help" id="jobResumeHelp">PDF, DOC or DOCX only. Maximum size 5 MB.</span>
+                <span class="error-message" id="jobResumeError">Please upload a PDF, DOC or DOCX file under 5 MB.</span>
+              </div>
+
+              <div class="input-group"><label class="form-label" for="jobQualifications">Additional qualifications</label><textarea id="jobQualifications" name="job_additional_qualifications" class="form-textarea" rows="3"></textarea></div>
+              <div class="input-group"><label class="form-label" for="jobMessage">Additional message</label><textarea id="jobMessage" name="job_message" class="form-textarea" rows="3"></textarea></div>
+            </fieldset>
+
+            <fieldset class="form-fieldset">
+              <legend>Screening questions</legend>
+              <div class="form-grid-two screening-grid">
+                <div class="input-group screening-question" id="screeningBackgroundGroup"><label class="form-label" for="screeningBackground">Willing to complete a background check? <span aria-hidden="true">*</span></label><select id="screeningBackground" name="screening_background_check" class="form-select form-input--plain" required aria-describedby="screeningBackgroundError"><option value="" disabled selected>Select one</option><option value="yes">Yes</option><option value="no">No</option></select><span class="error-message" id="screeningBackgroundError">Please answer.</span></div>
+                <div class="input-group screening-question" id="screeningVerificationGroup"><label class="form-label" for="screeningVerification">Willing to complete employment verification? <span aria-hidden="true">*</span></label><select id="screeningVerification" name="screening_employment_verification" class="form-select form-input--plain" required aria-describedby="screeningVerificationError"><option value="" disabled selected>Select one</option><option value="yes">Yes</option><option value="no">No</option></select><span class="error-message" id="screeningVerificationError">Please answer.</span></div>
+                <div class="input-group screening-question" id="screeningPersonalCareGroup"><label class="form-label" for="screeningPersonalCare">Comfortable providing personal-care assistance? <span aria-hidden="true">*</span></label><select id="screeningPersonalCare" name="screening_personal_care" class="form-select form-input--plain" required aria-describedby="screeningPersonalCareError"><option value="" disabled selected>Select one</option><option value="yes">Yes</option><option value="no">No</option></select><span class="error-message" id="screeningPersonalCareError">Please answer.</span></div>
+                <div class="input-group screening-question" id="screeningMobilityGroup"><label class="form-label" for="screeningMobility">Able to assist with mobility and transfers? <span aria-hidden="true">*</span></label><select id="screeningMobility" name="screening_mobility_transfers" class="form-select form-input--plain" required aria-describedby="screeningMobilityError"><option value="" disabled selected>Select one</option><option value="yes">Yes</option><option value="no">No</option></select><span class="error-message" id="screeningMobilityError">Please answer.</span></div>
+                <div class="input-group screening-question" id="screeningElderlyGroup"><label class="form-label" for="screeningElderly">Comfortable working with elderly clients? <span aria-hidden="true">*</span></label><select id="screeningElderly" name="screening_elderly_clients" class="form-select form-input--plain" required aria-describedby="screeningElderlyError"><option value="" disabled selected>Select one</option><option value="yes">Yes</option><option value="no">No</option></select><span class="error-message" id="screeningElderlyError">Please answer.</span></div>
+                <div class="input-group screening-question" id="screeningDementiaGroup"><label class="form-label" for="screeningDementia">Comfortable with clients who have dementia? <span aria-hidden="true">*</span></label><select id="screeningDementia" name="screening_dementia_clients" class="form-select form-input--plain" required aria-describedby="screeningDementiaError"><option value="" disabled selected>Select one</option><option value="yes">Yes</option><option value="no">No</option></select><span class="error-message" id="screeningDementiaError">Please answer.</span></div>
+                <div class="input-group screening-question" id="screeningScheduleGroup"><label class="form-label" for="screeningSchedule">Available for the selected schedule? <span aria-hidden="true">*</span></label><select id="screeningSchedule" name="screening_selected_schedule" class="form-select form-input--plain" required aria-describedby="screeningScheduleError"><option value="" disabled selected>Select one</option><option value="yes">Yes</option><option value="no">No</option></select><span class="error-message" id="screeningScheduleError">Please answer.</span></div>
+                <div class="input-group screening-question" id="screeningTransportationGroup"><label class="form-label" for="screeningTransportation">Do you have reliable transportation? <span aria-hidden="true">*</span></label><select id="screeningTransportation" name="screening_reliable_transportation" class="form-select form-input--plain" required aria-describedby="screeningTransportationError"><option value="" disabled selected>Select one</option><option value="yes">Yes</option><option value="no">No</option></select><span class="error-message" id="screeningTransportationError">Please answer.</span></div>
+              </div>
+
+              <div class="input-group checkbox-group" id="jobConsentGroup" data-required-checkbox-group>
+                <label class="consent-checkbox" for="jobConsent">
+                  <input type="checkbox" id="jobConsent" name="job_information_accuracy_consent" value="yes" required aria-describedby="jobConsentError">
+                  <span>I confirm that the information provided is accurate and complete. <strong aria-hidden="true">*</strong></span>
+                </label>
+                <span class="error-message" id="jobConsentError">Please confirm that your information is accurate.</span>
+              </div>
+            </fieldset>
+          </div>
+
           <div class="cf-turnstile" data-sitekey="0x4AAAAAADfL87PzEUv1-hoo"></div>
 
           <button type="submit" class="submit-btn">
@@ -1920,8 +2290,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <polyline points="10 9 9 9 8 9"/>
               </svg>
             </span>
-            <span class="btn-text">Request A Care Call
-</span>
+            <span class="btn-text">Continue</span>
           </button>
         </form>
 
@@ -1952,7 +2321,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       const sectionForm = document.getElementById('careRequestForm');
       const formCard = document.getElementById('contactFormCard');
 
-      if (sectionForm && formCard) {
+      if (false && sectionForm && formCard) {
         sectionForm.addEventListener('submit', function (e) {
           e.preventDefault();
 
@@ -2062,6 +2431,362 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         });
       }
     })();
+</script>
+<script>
+  (function () {
+    const form = document.getElementById('careRequestForm');
+    const formCard = document.getElementById('contactFormCard');
+    const status = document.getElementById('formStatus');
+    const carePanel = document.getElementById('careFields');
+    const jobPanel = document.getElementById('jobFields');
+    const submitBtn = form ? form.querySelector('.submit-btn') : null;
+    const careTypes = ['self_care', 'family_care', 'professional_referral'];
+    const adParamNames = ['gclid', 'gbraid', 'wbraid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+    const trackingInputs = {
+      gclid: document.getElementById('trackingGclid'),
+      gbraid: document.getElementById('trackingGbraid'),
+      wbraid: document.getElementById('trackingWbraid'),
+      utm_source: document.getElementById('trackingUtmSource'),
+      utm_medium: document.getElementById('trackingUtmMedium'),
+      utm_campaign: document.getElementById('trackingUtmCampaign'),
+      utm_content: document.getElementById('trackingUtmContent'),
+      utm_term: document.getElementById('trackingUtmTerm')
+    };
+    const formDestinations = {
+      care: {
+        serviceId: 'service_nrq14eb',
+        templateId: 'template_7be60f6',
+        toEmails: 'Thea@sihcdfw.com,Stayinhome@sihcdfw.com,leads@sihcdfw.com,ru208208@gmail.com'
+      },
+      job: {
+        serviceId: 'service_nrq14eb',
+        templateId: 'template_7be60f6',
+        toEmails: 'Thea@sihcdfw.com,Stayinhome@sihcdfw.com'
+      }
+    };
+    const labels = {
+      self_care: 'Qualified Home-Care Enquiry',
+      family_care: 'Qualified Home-Care Enquiry',
+      professional_referral: 'Professional Referral',
+      job_application: 'Job Application'
+    };
+    const maxResumeSize = 5 * 1024 * 1024;
+    const resumeTypes = [
+      'application/pdf',
+      'application/msword',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+    ];
+    let isSubmitting = false;
+
+    if (!form || !formCard || !submitBtn) return;
+
+    function currentSubmitText() {
+      return submitBtn ? submitBtn.querySelector('.btn-text') : null;
+    }
+
+    function selectedEnquiryType() {
+      const selected = form.querySelector('input[name="enquiry_type"]:checked');
+      return selected ? selected.value : '';
+    }
+
+    function activePanelFor(type) {
+      if (careTypes.includes(type)) return carePanel;
+      if (type === 'job_application') return jobPanel;
+      return null;
+    }
+
+    function setPanel(panel, isActive) {
+      if (!panel) return;
+      panel.hidden = !isActive;
+      panel.setAttribute('aria-hidden', String(!isActive));
+      panel.classList.toggle('is-active', isActive);
+      panel.querySelectorAll('input, select, textarea').forEach(control => {
+        control.disabled = !isActive;
+        if (!isActive) control.setAttribute('aria-hidden', 'true');
+        else control.removeAttribute('aria-hidden');
+      });
+    }
+
+    function updateVisibleFields() {
+      const type = selectedEnquiryType();
+      const isCare = careTypes.includes(type);
+      setPanel(carePanel, isCare);
+      setPanel(jobPanel, type === 'job_application');
+      const text = currentSubmitText();
+      if (text) text.textContent = type === 'job_application' ? 'Submit Job Application' : 'Submit Care Request';
+      if (!type && text) text.textContent = 'Continue';
+      clearStatus();
+      clearErrors();
+    }
+
+    function setStatus(message, mode) {
+      if (!status) return;
+      status.textContent = message || '';
+      status.className = mode ? `form-status form-status--${mode}` : 'form-status';
+    }
+
+    function clearStatus() {
+      setStatus('', '');
+    }
+
+    function fieldGroupFor(control) {
+      return control.closest('.input-group') || control.closest('.checkbox-group') || control.closest('.enquiry-type-group');
+    }
+
+    function clearErrors() {
+      form.querySelectorAll('.has-error').forEach(group => group.classList.remove('has-error'));
+      form.querySelectorAll('[aria-invalid="true"]').forEach(control => control.removeAttribute('aria-invalid'));
+    }
+
+    function markInvalid(control) {
+      const group = fieldGroupFor(control);
+      if (group) group.classList.add('has-error');
+      control.setAttribute('aria-invalid', 'true');
+      return control;
+    }
+
+    function validateControl(control) {
+      if (control.disabled || control.type === 'hidden' || control.type === 'button' || control.type === 'submit') return null;
+      if (control.type === 'file') return validateResume(control);
+      if (control.type === 'checkbox' || control.type === 'radio') return null;
+
+      const value = control.value.trim();
+      if (control.required && !value) return markInvalid(control);
+      if (!value) return null;
+
+      if (control.type === 'email') {
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(value)) return markInvalid(control);
+      }
+
+      if (control.type === 'tel') {
+        const phoneDigits = value.replace(/\D/g, '');
+        if (phoneDigits.length !== 10) return markInvalid(control);
+      }
+
+      if (control.name && /zip/i.test(control.name)) {
+        const zipPattern = /^\d{5}(-\d{4})?$/;
+        if (!zipPattern.test(value)) return markInvalid(control);
+      }
+
+      if (control.pattern) {
+        try {
+          const pattern = new RegExp(control.pattern);
+          if (!pattern.test(value)) return markInvalid(control);
+        } catch (error) {
+          return null;
+        }
+      }
+
+      return null;
+    }
+
+    function validateRequiredCheckboxGroups(panel) {
+      const invalid = [];
+      panel.querySelectorAll('[data-required-checkbox-group]').forEach(group => {
+        const boxes = Array.from(group.querySelectorAll('input[type="checkbox"]:not(:disabled)'));
+        if (boxes.length && !boxes.some(box => box.checked)) {
+          group.classList.add('has-error');
+          boxes[0].setAttribute('aria-invalid', 'true');
+          invalid.push(boxes[0]);
+        }
+      });
+      return invalid;
+    }
+
+    function validateResume(control) {
+      const file = control.files && control.files[0];
+      if (!file) return null;
+      const extensionAllowed = /\.(pdf|doc|docx)$/i.test(file.name);
+      const typeAllowed = !file.type || resumeTypes.includes(file.type);
+      if (!extensionAllowed || !typeAllowed || file.size > maxResumeSize) return markInvalid(control);
+      return null;
+    }
+
+    function validateCurrentRoute(type) {
+      clearErrors();
+      const invalid = [];
+      const panel = activePanelFor(type);
+
+      if (!type) {
+        const firstRadio = form.querySelector('input[name="enquiry_type"]');
+        document.getElementById('enquiryTypeGroup').classList.add('has-error');
+        firstRadio.setAttribute('aria-invalid', 'true');
+        invalid.push(firstRadio);
+      }
+
+      if (panel) {
+        panel.querySelectorAll('input, select, textarea').forEach(control => {
+          const invalidControl = validateControl(control);
+          if (invalidControl) invalid.push(invalidControl);
+        });
+        invalid.push(...validateRequiredCheckboxGroups(panel));
+      }
+
+      if (invalid.length) {
+        setStatus('Please review the highlighted fields before submitting.', 'error');
+        invalid[0].focus({ preventScroll: true });
+        invalid[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return false;
+      }
+
+      return true;
+    }
+
+    function formatPhoneInput(event) {
+      let raw = event.target.value.replace(/\D/g, '');
+      if (raw.length > 10 && raw.startsWith('1')) raw = raw.substring(1);
+      const parts = raw.match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+      event.target.value = !parts[2] ? parts[1] : '(' + parts[1] + ') ' + parts[2] + (parts[3] ? '-' + parts[3] : '');
+    }
+
+    function sanitizeVisibleValues(panel) {
+      panel.querySelectorAll('input:not([type="file"]):not([type="checkbox"]):not([type="radio"]), textarea').forEach(control => {
+        if (!control.disabled) control.value = control.value.replace(/[\u0000-\u001f\u007f<>]/g, '').trim();
+      });
+    }
+
+    function persistAdParams() {
+      const params = new URLSearchParams(window.location.search);
+      adParamNames.forEach(name => {
+        const value = params.get(name);
+        if (value) sessionStorage.setItem(`lead_${name}`, value);
+      });
+    }
+
+    function setTrackingFields(includeTracking) {
+      adParamNames.forEach(name => {
+        const input = trackingInputs[name];
+        if (!input) return;
+        input.disabled = !includeTracking;
+        input.value = includeTracking ? (sessionStorage.getItem(`lead_${name}`) || '') : '';
+      });
+    }
+
+    function applySubmissionMetadata(type) {
+      const isJob = type === 'job_application';
+      const destination = isJob ? formDestinations.job : formDestinations.care;
+      document.getElementById('recipientEmails').value = destination.toEmails;
+      document.getElementById('submissionLabel').value = labels[type] || '';
+      document.getElementById('submissionType').value = isJob ? 'job_application' : 'home_care_lead';
+      setTrackingFields(!isJob);
+      return destination;
+    }
+
+    function setLoading(isLoading) {
+      submitBtn.disabled = isLoading;
+      submitBtn.classList.toggle('is-loading', isLoading);
+      if (isLoading) {
+        submitBtn.innerHTML = '<svg class="spinner" viewBox="0 0 50 50" aria-hidden="true"><circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle></svg><span class="btn-text">Submitting...</span>';
+      } else {
+        const type = selectedEnquiryType();
+        submitBtn.innerHTML = '<span class="btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></span><span class="btn-text"></span>';
+        submitBtn.querySelector('.btn-text').textContent = type === 'job_application' ? 'Submit Job Application' : type ? 'Submit Care Request' : 'Continue';
+      }
+    }
+
+    function recentlySubmitted() {
+      const last = Number(sessionStorage.getItem('lastFinalFormSubmitAt') || '0');
+      return Date.now() - last < 12000;
+    }
+
+    function submissionId() {
+      return `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+    }
+
+    async function submitForm(event) {
+      event.preventDefault();
+      if (isSubmitting || recentlySubmitted()) {
+        setStatus('Please wait a few seconds before submitting again.', 'error');
+        return;
+      }
+
+      const type = selectedEnquiryType();
+      const panel = activePanelFor(type);
+      const honeypot = document.getElementById('companyWebsite');
+      if (honeypot && honeypot.value.trim()) return;
+      if (!validateCurrentRoute(type)) return;
+
+      sanitizeVisibleValues(panel);
+      const destination = applySubmissionMetadata(type);
+      isSubmitting = true;
+      sessionStorage.setItem('lastFinalFormSubmitAt', String(Date.now()));
+      setLoading(true);
+      setStatus('Submitting your information...', 'loading');
+
+      try {
+        if (!window.emailjs || typeof window.emailjs.sendForm !== 'function') {
+          throw new Error('EmailJS is not available.');
+        }
+
+        await window.emailjs.sendForm(destination.serviceId, destination.templateId, form);
+        const id = submissionId();
+
+        if (type === 'job_application') {
+          sessionStorage.setItem('validJobSubmission', 'true');
+          sessionStorage.setItem('jobSubmissionId', id);
+          window.location.href = './job-application-received-4p8x21/';
+        } else {
+          sessionStorage.setItem('validCareSubmission', 'true');
+          sessionStorage.setItem('careSubmissionId', id);
+          sessionStorage.setItem('careSubmissionType', type);
+          window.location.href = './thank-you-care-request-7k3m92/';
+        }
+      } catch (error) {
+        console.error('Final form submission failed', error);
+        setStatus('Something went wrong. Please try again or call us at 1 214-612-6686.', 'error');
+        setLoading(false);
+        isSubmitting = false;
+        if (window.turnstile) window.turnstile.reset();
+      }
+    }
+
+    function preselectEnquiry(type, shouldScroll) {
+      const radio = form.querySelector(`input[name="enquiry_type"][value="${type}"]`);
+      if (!radio) return;
+      radio.checked = true;
+      updateVisibleFields();
+      if (shouldScroll) formCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    persistAdParams();
+    updateVisibleFields();
+    form.addEventListener('submit', submitForm);
+
+    form.querySelectorAll('input[name="enquiry_type"]').forEach(radio => {
+      radio.addEventListener('change', updateVisibleFields);
+    });
+
+    form.querySelectorAll('input[type="tel"]').forEach(input => {
+      input.addEventListener('input', formatPhoneInput);
+    });
+
+    form.querySelectorAll('input, select, textarea').forEach(control => {
+      control.addEventListener('input', () => {
+        const group = fieldGroupFor(control);
+        if (group) group.classList.remove('has-error');
+        control.removeAttribute('aria-invalid');
+        clearStatus();
+      });
+      control.addEventListener('change', () => {
+        const group = fieldGroupFor(control);
+        if (group) group.classList.remove('has-error');
+        control.removeAttribute('aria-invalid');
+        clearStatus();
+      });
+    });
+
+    document.querySelectorAll('[data-select-enquiry]').forEach(trigger => {
+      trigger.addEventListener('click', event => {
+        const type = trigger.getAttribute('data-select-enquiry');
+        const isButton = trigger.tagName.toLowerCase() === 'button';
+        if (isButton) event.preventDefault();
+        const mobileNav = trigger.closest('details');
+        if (mobileNav) mobileNav.removeAttribute('open');
+        preselectEnquiry(type, true);
+      });
+    });
+  })();
 </script>
 </section>
 
