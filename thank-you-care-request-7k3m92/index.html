@@ -46,6 +46,11 @@
         content_type:"page"
       }]
     });
+    window.trackOpenAIAdCustomEvent = function(customEventName, options){
+      if (!window.oaiq || !customEventName) return;
+      var eventOptions = Object.assign({custom_event_name:customEventName}, options || {});
+      oaiq("measure","custom",{type:"custom"},eventOptions);
+    };
     (function () {
       try {
         if (sessionStorage.getItem("validCareSubmission") !== "true") return;
@@ -228,7 +233,18 @@
       sessionStorage.removeItem('validCareSubmission');
       sessionStorage.removeItem('careSubmissionId');
       sessionStorage.removeItem('careSubmissionType');
+      sessionStorage.removeItem('careFormStartedTracked');
+      sessionStorage.removeItem('careSubmitAttemptTrackedAt');
     })();
+  </script>
+  <script>
+    document.addEventListener('click', event => {
+      const phoneLink = event.target.closest('a[href^="tel:"]');
+      if (!phoneLink || typeof window.trackOpenAIAdCustomEvent !== 'function') return;
+      window.trackOpenAIAdCustomEvent('phone_number', {
+        event_id: `phone-click-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`
+      });
+    });
   </script>
 </body>
 </html>

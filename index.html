@@ -37,6 +37,11 @@
           content_type:"page"
         }]
       });
+      window.trackOpenAIAdCustomEvent = function(customEventName, options){
+        if (!window.oaiq || !customEventName) return;
+        var eventOptions = Object.assign({custom_event_name:customEventName}, options || {});
+        oaiq("measure","custom",{type:"custom"},eventOptions);
+      };
     </script>
     <!-- End OpenAI Ads Pixel -->
     <meta name="title" content="Dallas Home Care for Seniors & Loved Ones">
@@ -2401,6 +2406,10 @@
 
           // Action step route execution block
           if (!hasError) {
+            if (typeof window.trackOpenAICareSubmitAttempt === 'function') {
+              window.trackOpenAICareSubmitAttempt();
+            }
+
             const submitBtn = sectionForm.querySelector('.submit-btn');
             const originalBtnContent = submitBtn.innerHTML;
             
@@ -2740,6 +2749,9 @@
       const honeypot = document.getElementById('companyWebsite');
       if (honeypot && honeypot.value.trim()) return;
       if (!validateCurrentRoute(type)) return;
+      if (careTypes.includes(type) && typeof window.trackOpenAICareSubmitAttempt === 'function') {
+        window.trackOpenAICareSubmitAttempt();
+      }
 
       sanitizeVisibleValues(panel);
       const destination = applySubmissionMetadata(type);
@@ -2898,9 +2910,64 @@
   </div>
 </div>
 
-<script>
-  (function () {
-    const modal = document.getElementById('jobApplicationModal');
+  <script>
+    (function () {
+      function trackCustomEvent(customEventName, options) {
+        if (typeof window.trackOpenAIAdCustomEvent === 'function') {
+          window.trackOpenAIAdCustomEvent(customEventName, options);
+        }
+      }
+
+      function eventId(prefix) {
+        return `${prefix || 'event'}-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+      }
+
+      window.trackOpenAICareSubmitAttempt = function() {
+        const lastAttemptAt = Number(sessionStorage.getItem('careSubmitAttemptTrackedAt') || '0');
+        if (Date.now() - lastAttemptAt < 5000) return;
+        sessionStorage.setItem('careSubmitAttemptTrackedAt', String(Date.now()));
+        trackCustomEvent('care_form_submitted_attempt', {
+          event_id: eventId('care-submit-attempt')
+        });
+      };
+
+      document.addEventListener('click', event => {
+        const phoneLink = event.target.closest('a[href^="tel:"]');
+        if (!phoneLink) return;
+        trackCustomEvent('phone_number', {
+          event_id: eventId('phone-click')
+        });
+      });
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const careForm = document.getElementById('careRequestForm');
+        const careFields = document.getElementById('careFields');
+        if (!careForm || !careFields) return;
+
+        const markCareFormStarted = () => {
+          if (sessionStorage.getItem('careFormStartedTracked') === 'true') return;
+          sessionStorage.setItem('careFormStartedTracked', 'true');
+          trackCustomEvent('care_form_started', {
+            event_id: eventId('care-form-started')
+          });
+        };
+
+        careFields.addEventListener('focusin', markCareFormStarted);
+        careFields.addEventListener('input', markCareFormStarted);
+        careFields.addEventListener('change', markCareFormStarted);
+
+        careForm.querySelectorAll('input[name="enquiry_type"]').forEach(radio => {
+          radio.addEventListener('change', () => {
+            if (['self_care', 'family_care', 'professional_referral'].includes(radio.value) && radio.checked) {
+              markCareFormStarted();
+            }
+          });
+        });
+      });
+    })();
+
+    (function () {
+      const modal = document.getElementById('jobApplicationModal');
     const form = document.getElementById('jobApplicationForm');
     const openButtons = document.querySelectorAll('[data-open-job-form]');
     const closeButtons = document.querySelectorAll('[data-close-job-form]');

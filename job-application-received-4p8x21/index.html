@@ -23,6 +23,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Your Job Application Has Been Received | Stay In Home Care</title>
+  <!-- OpenAI Ads Pixel -->
+  <script>
+    !function(w,d,s,u){if(w.oaiq)return;var q=function(){q.q.push(arguments)};q.q=[];w.oaiq=q;var j=d.createElement(s);j.async=1;j.src=u;var f=d.getElementsByTagName(s)[0];f.parentNode.insertBefore(j,f)}(window,document,"script","https://bzrcdn.openai.com/sdk/oaiq.min.js");
+    oaiq("init",{pixelId:"Y8Y6CVvjkysvjBpP7wa3FW",debug:true});
+    oaiq("measure","page_viewed",{
+      type:"contents",
+      contents:[{
+        id:"job-application-received",
+        name:"Job application received page",
+        content_type:"page"
+      }]
+    });
+    window.trackOpenAIAdCustomEvent = function(customEventName, options){
+      if (!window.oaiq || !customEventName) return;
+      var eventOptions = Object.assign({custom_event_name:customEventName}, options || {});
+      oaiq("measure","custom",{type:"custom"},eventOptions);
+    };
+  </script>
+  <!-- End OpenAI Ads Pixel -->
   <link rel="stylesheet" href="../critical.css">
   <style>
     body {
@@ -198,6 +217,11 @@
           submission_id: submissionId,
           enquiry_type: 'job_application'
         });
+        if (typeof window.trackOpenAIAdCustomEvent === 'function') {
+          window.trackOpenAIAdCustomEvent('job_form_submitted', {
+            event_id: submissionId
+          });
+        }
         sessionStorage.setItem('jobEventFiredId', submissionId);
       }
 
