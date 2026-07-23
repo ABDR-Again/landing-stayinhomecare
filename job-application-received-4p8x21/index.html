@@ -202,13 +202,25 @@
 
   <script>
     (function () {
-      const JOB_APPLICANT_REDIRECT_URL = '[JOB-APPLICANT-REDIRECT-URL]';
+      const JOB_APPLICANT_REDIRECT_URL = '../';
       const validSubmission = sessionStorage.getItem('validJobSubmission') === 'true';
       const submissionId = sessionStorage.getItem('jobSubmissionId') || 'job-submission';
       const firedId = sessionStorage.getItem('jobEventFiredId');
       const redirectLink = document.getElementById('jobRedirectLink');
 
       if (redirectLink) redirectLink.href = JOB_APPLICANT_REDIRECT_URL;
+
+      if (!validSubmission) {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: 'thank_you_direct_visit',
+          page_type: 'job_application_thank_you'
+        });
+        setTimeout(() => {
+          window.location.replace(JOB_APPLICANT_REDIRECT_URL);
+        }, 1200);
+        return;
+      }
 
       if (validSubmission && firedId !== submissionId) {
         window.dataLayer = window.dataLayer || [];

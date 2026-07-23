@@ -1,17 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script>
-    (function () {
-      try {
-        if (sessionStorage.getItem('validCareSubmission') !== 'true') {
-          window.location.replace('../');
-        }
-      } catch (error) {
-        window.location.replace('../');
-      }
-    })();
-  </script>
 <!-- Google Tag Manager -->
 <script>
 (function(w,d,s,l,i){
@@ -203,7 +192,14 @@
     (function () {
       const validSubmission = sessionStorage.getItem('validCareSubmission') === 'true';
       if (!validSubmission) {
-        window.location.replace('../');
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: 'thank_you_direct_visit',
+          page_type: 'care_request_thank_you'
+        });
+        setTimeout(() => {
+          window.location.replace('../');
+        }, 1200);
         return;
       }
 
