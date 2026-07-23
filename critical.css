@@ -549,6 +549,135 @@ a {
   height: 17px;
 }
 
+@media (min-width: 901px) and (max-height: 900px) {
+  .stay-in-home-hero {
+    min-height: 100svh;
+    padding: clamp(126px, 18vh, 152px) 0 clamp(34px, 5vh, 56px);
+  }
+
+  .hero-grid {
+    align-items: start;
+    gap: clamp(34px, 4.2vw, 64px);
+  }
+
+  .eyebrow {
+    margin-bottom: 16px;
+  }
+
+  .stay-in-home-hero h1 {
+    max-width: 15.8ch;
+    font-size: clamp(2.75rem, 4.15vw, 4.1rem);
+    line-height: 1.03;
+  }
+
+  .hero-description {
+    max-width: 590px;
+    margin-top: 18px;
+    font-size: clamp(0.98rem, 1.15vw, 1.08rem);
+    line-height: 1.45;
+  }
+
+  .audience-actions {
+    gap: 16px;
+    margin-top: 26px;
+  }
+
+  .audience-card {
+    min-height: 136px;
+    gap: 15px;
+    padding: 20px 22px;
+  }
+
+  .audience-icon {
+    width: 58px;
+  }
+
+  .audience-icon svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  .audience-content {
+    padding-right: 24px;
+  }
+
+  .audience-content strong {
+    margin-bottom: 6px;
+    font-size: clamp(1rem, 1.22vw, 1.14rem);
+    line-height: 1.2;
+  }
+
+  .audience-content span {
+    font-size: 0.86rem;
+    line-height: 1.38;
+  }
+
+  .audience-arrow {
+    right: 15px;
+    bottom: 15px;
+    width: 32px;
+    height: 32px;
+  }
+}
+
+@media (min-width: 901px) and (max-height: 760px) {
+  .site-header {
+    top: 10px;
+  }
+
+  .header-inner {
+    min-height: 84px;
+    padding-block: 10px;
+  }
+
+  .brand-logo-wrap {
+    width: 64px;
+    height: 58px;
+  }
+
+  .brand-logo {
+    width: 68px;
+    height: 68px;
+  }
+
+  .header-call {
+    min-height: 46px;
+    padding-inline: 18px;
+  }
+
+  .stay-in-home-hero {
+    padding-top: clamp(104px, 17vh, 128px);
+  }
+
+  .stay-in-home-hero h1 {
+    max-width: 16.8ch;
+    font-size: clamp(2.45rem, 3.8vw, 3.45rem);
+  }
+
+  .hero-description {
+    margin-top: 14px;
+    line-height: 1.38;
+  }
+
+  .audience-actions {
+    margin-top: 20px;
+  }
+
+  .audience-card {
+    min-height: 118px;
+    padding: 16px 18px;
+  }
+
+  .audience-icon {
+    width: 50px;
+  }
+
+  .audience-icon svg {
+    width: 28px;
+    height: 28px;
+  }
+}
+
 .hero-visual {
   position: relative;
   min-width: 0;
