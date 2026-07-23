@@ -183,7 +183,7 @@
 
     <h1 id="careThanksTitle">Your Care Request Has Been Submitted</h1>
     <p>Thank you. Your home-care request has been received successfully. A member of our care coordination team will contact you shortly.</p>
-    <a class="phone" href="tel:+12146126686">1 214-612-6686</a>
+    <a class="phone trk-phone" href="tel:+12146126686">1 214-612-6686</a>
     <br>
     <a class="btn-home" href="../">Return to homepage</a>
   </main>
@@ -235,7 +235,7 @@
   </script>
   <script>
     document.addEventListener('click', event => {
-      const phoneLink = event.target.closest('a[href^="tel:"]');
+      const phoneLink = event.target.closest('.trk-phone');
       if (!phoneLink || typeof window.trackOpenAIAdCustomEvent !== 'function') return;
       window.trackOpenAIAdCustomEvent('phone_number', {
         event_id: `phone-click-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`
