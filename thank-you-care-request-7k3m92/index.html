@@ -34,6 +34,30 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Your Care Request Has Been Submitted | Stay In Home Care</title>
+  <!-- OpenAI Ads Pixel -->
+  <script>
+    !function(w,d,s,u){if(w.oaiq)return;var q=function(){q.q.push(arguments)};q.q=[];w.oaiq=q;var j=d.createElement(s);j.async=1;j.src=u;var f=d.getElementsByTagName(s)[0];f.parentNode.insertBefore(j,f)}(window,document,"script","https://bzrcdn.openai.com/sdk/oaiq.min.js");
+    oaiq("init",{pixelId:"Y8Y6CVvjkysvjBpP7wa3FW",debug:true});
+    oaiq("measure","page_viewed",{
+      type:"contents",
+      contents:[{
+        id:"care-request-thank-you",
+        name:"Care request thank you page",
+        content_type:"page"
+      }]
+    });
+    (function () {
+      try {
+        if (sessionStorage.getItem("validCareSubmission") !== "true") return;
+        var eventId = sessionStorage.getItem("careSubmissionId");
+        var options = eventId ? {event_id:eventId} : undefined;
+        oaiq("measure","lead_created",{type:"customer_action"},options);
+      } catch (error) {
+        oaiq("measure","lead_created",{type:"customer_action"});
+      }
+    })();
+  </script>
+  <!-- End OpenAI Ads Pixel -->
   <link rel="stylesheet" href="../critical.css">
   <style>
     body {

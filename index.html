@@ -2424,8 +2424,10 @@
                 if (window.turnstile) {
                     window.turnstile.reset();
                 }
-                // Redirect to the Thank You page
-                window.location.href = './thank-you.html';
+                sessionStorage.setItem('validCareSubmission', 'true');
+                sessionStorage.setItem('careSubmissionId', `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`);
+                // Redirect to the care request Thank You page
+                window.location.href = './thank-you-care-request-7k3m92/';
               }, (error) => {
                 submitBtn.classList.remove('is-loading');
                 submitBtn.disabled = false;
