@@ -1,17 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script>
-    (function () {
-      try {
-        if (sessionStorage.getItem('validCareSubmission') !== 'true') {
-          window.location.replace('../');
-        }
-      } catch (error) {
-        window.location.replace('../');
-      }
-    })();
-  </script>
 <!-- Google Tag Manager -->
 <script>
 (function(w,d,s,l,i){
@@ -34,6 +23,35 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Your Care Request Has Been Submitted | Stay In Home Care</title>
+  <!-- OpenAI Ads Pixel -->
+  <script>
+    !function(w,d,s,u){if(w.oaiq)return;var q=function(){q.q.push(arguments)};q.q=[];w.oaiq=q;var j=d.createElement(s);j.async=1;j.src=u;var f=d.getElementsByTagName(s)[0];f.parentNode.insertBefore(j,f)}(window,document,"script","https://bzrcdn.openai.com/sdk/oaiq.min.js");
+    oaiq("init",{pixelId:"Y8Y6CVvjkysvjBpP7wa3FW",debug:true});
+    oaiq("measure","page_viewed",{
+      type:"contents",
+      contents:[{
+        id:"care-request-thank-you",
+        name:"Care request thank you page",
+        content_type:"page"
+      }]
+    });
+    window.trackOpenAIAdCustomEvent = function(customEventName, options){
+      if (!window.oaiq || !customEventName) return;
+      var eventOptions = Object.assign({custom_event_name:customEventName}, options || {});
+      oaiq("measure","custom",{type:"custom"},eventOptions);
+    };
+    (function () {
+      try {
+        if (sessionStorage.getItem("validCareSubmission") !== "true") return;
+        var eventId = sessionStorage.getItem("careSubmissionId");
+        var options = eventId ? {event_id:eventId} : undefined;
+        oaiq("measure","lead_created",{type:"customer_action"},options);
+      } catch (error) {
+        oaiq("measure","lead_created",{type:"customer_action"});
+      }
+    })();
+  </script>
+  <!-- End OpenAI Ads Pixel -->
   <link rel="stylesheet" href="../critical.css">
   <style>
     body {
@@ -165,7 +183,7 @@
 
     <h1 id="careThanksTitle">Your Care Request Has Been Submitted</h1>
     <p>Thank you. Your home-care request has been received successfully. A member of our care coordination team will contact you shortly.</p>
-    <a class="phone" href="tel:+12146126686">1 214-612-6686</a>
+    <a class="phone trk-phone" href="tel:+12146126686">1 214-612-6686</a>
     <br>
     <a class="btn-home" href="../">Return to homepage</a>
   </main>
@@ -174,7 +192,14 @@
     (function () {
       const validSubmission = sessionStorage.getItem('validCareSubmission') === 'true';
       if (!validSubmission) {
-        window.location.replace('../');
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: 'thank_you_direct_visit',
+          page_type: 'care_request_thank_you'
+        });
+        setTimeout(() => {
+          window.location.replace('../');
+        }, 1200);
         return;
       }
 
@@ -204,7 +229,18 @@
       sessionStorage.removeItem('validCareSubmission');
       sessionStorage.removeItem('careSubmissionId');
       sessionStorage.removeItem('careSubmissionType');
+      sessionStorage.removeItem('careFormStartedTracked');
+      sessionStorage.removeItem('careSubmitAttemptTrackedAt');
     })();
+  </script>
+  <script>
+    document.addEventListener('click', event => {
+      const phoneLink = event.target.closest('.trk-phone');
+      if (!phoneLink || typeof window.trackOpenAIAdCustomEvent !== 'function') return;
+      window.trackOpenAIAdCustomEvent('phone_number', {
+        event_id: `phone-click-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`
+      });
+    });
   </script>
 </body>
 </html>
